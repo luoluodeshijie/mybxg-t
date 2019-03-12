@@ -1,10 +1,10 @@
 <?php 
   //后端路由（根据URL的不同相应不同的页面）
   header('content-type:text/html;charset=utf8');
+  //include 在当前PHP页面内部嵌入一个子页面
   //include('./header.html');
   //echo '<div>主页内容</div>';
   //include('./footer.html');
-  //include 在当前PHP页面内部嵌入一个子页面
   //必须能够通过URL区分出用户想访问的那个页面
   
   //默认目录名称
