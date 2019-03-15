@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>学IT - 后台管理系统</title>
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="../../public/assets/nprogress/nprogress.css">
     <link rel="stylesheet" href="../../public/less/index.css">
 </head>
+
 <body>
     <!-- 登录 -->
     <div class="login">
@@ -32,24 +34,30 @@
             </form>
         </div>
     </div>
-    
+
     <script src="../../public/assets/jquery/jquery.min.js"></script>
+    <script src="../../public/assets/jquery-cookie/jquery.cookie.js"></script>
     <script src="../../public/assets/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-        $('#loginBtn').click(function(){
+        $('#loginBtn').click(function() {
             $.ajax({
-                type:'post',
-                url:'/api/login',
-                data:$('#loginForm').serialize(),
-                dataType:'json',
-                success:function(data){
-                    if(data.code == 200){
+                type: 'post',
+                url: '/api/login',
+                data: $('#loginForm').serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    if (data.code == 200) {
+                        // 把用户的登录信息存储到 cookie 中，方便跨页面共享数据
+                        $.cookie('loginInfo', JSON.stringify(data.result), {
+                            path: '/'
+                        })
                         location.href = '/main/index';
                     }
                 }
             });
-            return false;//阻止按钮的默认行为
+            return false; //阻止按钮的默认行为
         });
     </script>
 </body>
+
 </html>
