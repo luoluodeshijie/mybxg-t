@@ -1,4 +1,4 @@
-define(['jquery', 'template', 'util'], function($, template, util) {
+define(['jquery', 'template', 'util', 'ckeditor'], function($, template, util, CKEDITOR) {
     // 设置导航菜单选中
     util.setMenu('/course/add')
         // 获取课程ID
@@ -20,6 +20,26 @@ define(['jquery', 'template', 'util'], function($, template, util) {
             }
             var html = template('basicTpl', data.result)
             $('#basicInfo').html(html)
+                // 处理耳机分类的下拉联动
+            $('#firstType').change(function() {
+                var pid = $('#firstType').val()
+                    // 根据一级分类的ID 查询二级分类的数据
+                $.ajax({
+                    type: 'get',
+                    url: '/api/category/child',
+                    data: { cg_id: pid },
+                    dataType: 'json',
+                    success: function(data) {
+                        // 拼接二级分类的下拉选项
+                        var tpl = '<option value="">清选则二级分类</option>{{each list}}<option value="{{$value.cg_id}}">{{$value.cg_name}}</option></option>{{/each}}';
+                        var html = template.render(tpl, { list: data.result })
+                        $('#secondType').html(html)
+                    }
+                })
+            })
+
+            // 处理富文本
+            CKEDITOR.replace('editor')
         }
     })
 
